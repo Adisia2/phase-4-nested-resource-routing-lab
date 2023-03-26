@@ -3,8 +3,8 @@ class ItemsController < ApplicationController
   before_action :set_user, except: [:index]
 
   def index
-    @items = Item.includes(:user).where(user_id: params[:user_id])
-    render json: @items, include: :user
+    @items = Item.includes(:user)
+    render json: @items.as_json(include: { user: { only: [:name, :email] } })
   end
 
   def show
